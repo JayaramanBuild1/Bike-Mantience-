@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f7f5fb"><meta name="application-name" content="Meteor 350 Rider Garage · Main Version 6"><meta name="description" content="Jayaraman’s personal Royal Enfield Meteor 350 garage dashboard"><title>Meteor 350 — Rider Garage · Main Version 6</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="loading-screen" id="loadingScreen" role="status" aria-live="polite" aria-label="Loading Meteor Garage">
+  <div class="loading-backdrop" aria-hidden="true"></div>
+  <div class="loading-road" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+  <div class="loading-topline"><img class="loading-re-logo" src="assets/royal-enfield-wordmark.jpg" alt="Royal Enfield"><img class="loading-meteor-logo" src="assets/meteor-350-logo.png" alt="Meteor 350"><span class="loading-location">MADURAI · TAMIL NADU</span></div>
+  <div class="loading-copy"><p class="loading-eyebrow">IGNITION ON · JOURNEY STARTING</p><h1>Ride into <em>Madurai.</em></h1><p class="loading-caption">Your ride. Your records. Your road.</p><div class="loading-progress" aria-hidden="true"><span id="loadingProgress"></span></div><div class="loading-status" id="loadingStatus">Starting your ride…</div></div>
+  <div class="loading-bike" aria-hidden="true"><img class="loading-bike-photo" src="assets/jayaraman-meteor-350.png" alt=""><i></i></div>
+  <div class="loading-bottom"><span>ROYAL ENFIELD · METEOR 350</span><div class="loading-controls"><button type="button" id="loadingSound" aria-pressed="false" title="Toggle optional engine sound">🔇 Sound off</button><button type="button" id="skipLoading">Skip loading ↗</button></div></div>
+</div>
+<div class="splash" id="welcomeSplash" aria-label="Welcome to Meteor Garage"><div class="splash-scene"></div><div class="splash-content"><img class="splash-re-logo" src="assets/royal-enfield-wordmark.jpg" alt="Royal Enfield"><img class="splash-meteor-logo" src="assets/meteor-350-logo.png" alt="Meteor 350"><div class="splash-kicker">YOUR PERSONAL MOTORCYCLE HUB · MADURAI, INDIA</div><h1>WELCOME JAYARAMAN RIDER</h1><div class="splash-sub">Royal Enfield Meteor 350 · Stellar Blue</div><div class="splash-clock" id="splashTime">--:--:--</div><div class="splash-date" id="splashDate">Madurai, Tamil Nadu, India</div><img class="splash-bike-photo" src="assets/jayaraman-meteor-350.png" alt="Jayaraman’s blue Royal Enfield Meteor 350"><div class="splash-sub">RIDE · EXPLORE · LIVE MORE</div><div class="splash-actions"><button class="btn primary" id="enterGarage">Enter your garage ↗</button><button class="btn" id="skipWelcome">Skip intro</button></div></div></div>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand"><img class="brand-meteor-logo" src="assets/meteor-350-logo.png" alt="Meteor 350"><div><strong>METEOR GARAGE</strong><span>Rider management</span></div></div>
+  <div class="navlabel">GARAGE</div>
+  <nav class="nav" id="nav">
+    <button class="active" data-view="dashboard"><span class="ico">⌂</span><span>Dashboard</span></button>
+    <button data-view="fuel"><span class="ico">⛽</span><span>Fuel & mileage</span></button>
+    <button data-view="services"><span class="ico">🔧</span><span>Service history</span></button>
+    <button data-view="parts"><span class="ico">⚙</span><span>Parts catalogue</span></button>
+    <button data-view="documents"><span class="ico">▤</span><span>Documents</span></button>
+    <button data-view="expenses"><span class="ico">₹</span><span>Expenses</span></button>
+    <button data-view="notices"><span class="ico">▣</span><span>Noticing board</span></button>
+    <button data-view="settings"><span class="ico">⚙</span><span>Settings & backup</span></button>
+    <button data-view="admin"><span class="ico">♙</span><span>Admin portal</span></button>
+  </nav>
+  <div class="sidefoot">MAIN VERSION 3 · LOCAL DATA<br>Data stays in this browser.</div>
+</aside>
+<main class="main">
+<header class="topbar"><div><div class="eyebrow">YOUR PERSONAL MOTORCYCLE HUB</div><h1 id="pageTitle">Good evening, Jayaraman.</h1></div><div class="top-actions"><div class="clock"><strong id="time">--:--:--</strong><span id="date">Madurai · India</span></div><span class="pill">METEOR 350 · STELLAR BLUE</span></div></header>
+<section id="dashboard" class="view active">
+  <div class="hero"><div class="hero-copy"><div class="eyebrow">WELCOME JAYARAMAN RIDER</div><h2>Ride. Explore.<br>Live more.</h2><p>Your Meteor 350, organised in one place — from fuel stops to service records.</p><button class="btn primary" data-go="services">Open service log ↗</button></div><div class="hero-bike" aria-hidden="true"><img src="assets/jayaraman-meteor-350.png" alt="Jayaraman’s blue Royal Enfield Meteor 350"></div></div>
+  <div class="grid stats">
+    <div class="card"><div class="stat-head">CURRENT ODOMETER <span class="stat-icon">◷</span></div><div class="stat-value" id="statOdo">17,109.8 <small style="font-size:14px">km</small></div><div class="stat-foot">Last user-confirmed reading</div></div>
+    <div class="card"><div class="stat-head">FUEL LOGS <span class="stat-icon">⛽</span></div><div class="stat-value" id="statFuel">0</div><div class="stat-foot">Entries recorded in this browser</div></div>
+    <div class="card"><div class="stat-head">SERVICE RECORDS <span class="stat-icon">🔧</span></div><div class="stat-value" id="statServices">0</div><div class="stat-foot">Records saved locally</div></div>
+    <div class="card"><div class="stat-head">TOTAL EXPENSES <span class="stat-icon">₹</span></div><div class="stat-value" id="statExpenses">₹0</div><div class="stat-foot">Based on entered expenses</div></div>
+  </div>
+  <div class="grid content-grid v4-insights">
+    <div class="card"><div class="section-head"><div><h2>Fuel history overview</h2><p>Imported entries from your screenshots</p></div></div><div class="v4-insight-values"><div><small>Recorded fuel entries</small><b id="v4FuelCount">13</b></div><div><small>Total litres recorded</small><b id="v4FuelLitres">—</b></div><div><small>Fuel spend recorded</small><b id="v4FuelSpend">—</b></div></div><p class="muted">Mileage is calculated only from verified full-tank intervals. Imported fill types remain marked for review.</p><button class="btn small" data-go="fuel">View fuel log ↗</button></div>
+    <div class="card"><div class="section-head"><div><h2>Maintenance target</h2><p>Your personal service interval</p></div></div><div class="v4-maintenance-number">20,609.8 <small>km</small></div><p>Next odometer target from your confirmed 17,109.8 km reading, based on 3,500 km.</p><span class="tag">3,500 km or 4 months</span><p class="muted">Calendar due date requires a confirmed latest service date.</p><button class="btn small" data-go="services">Review service history ↗</button></div>
+  </div>
+  <div class="grid content-grid">
+    <div class="card"><div class="section-head"><div><h2>Quick actions</h2><p>Capture a record before you forget.</p></div></div><div class="quick-actions">
+      <button class="quick" data-go="fuel"><span class="qico">⛽</span><b>Add fuel fill-up</b><span>Litres, price and odometer</span></button>
+      <button class="quick" data-go="services"><span class="qico">🔧</span><b>Log a service</b><span>Work, parts and bill details</span></button>
+      <button class="quick" data-go="parts"><span class="qico">⚙</span><b>Find a part number</b><span>Search both catalogue PDFs</span></button>
+      <button class="quick" data-go="documents"><span class="qico">▤</span><b>Store a document</b><span>Insurance, PUC, bills and more</span></button>
+    </div><div class="notice">Odometer integrity: <b>17,109.8 km</b> is the current user-confirmed dashboard reading. Older workshop readings may be inaccurate; they must remain separately documented, not silently overwritten.</div></div>
+    <div class="card"><div class="section-head"><div><h2>Noticing board</h2><p>Reminders and important notes</p></div><button class="btn small" data-go="notices">Manage</button></div><div id="dashboardNotices"></div><div class="notice" style="border-color:#2f5962;background:#172b31;color:#bde8e9">Personal service rule: every <b>3,500 km or 4 months</b>, whichever comes first. Track separately from the official manufacturer schedule.</div></div>
+  </div>
+  <div class="card" style="margin-top:16px"><div class="section-head"><div><h2>Recent activity</h2><p>Your latest fuel and service records</p></div></div><div id="recentActivity" class="empty">No records yet. Use the quick actions to start your log.</div></div>
+  <p class="footer-note">V1 prototype · Local browser storage · Export backups regularly. Production-secure admin authentication and cloud sync require a backend.</p>
+</section>
+<section id="fuel" class="view">
+  <div class="section-head"><div><h2>Fuel & mileage</h2><p>Full-tank-to-full-tank entries are used for mileage estimates; partial fills are expense-only until a valid full-tank pair exists.</p></div></div>
+  <div class="grid two-col">
+    <div class="card"><h2 style="margin-top:0">Add fuel entry</h2><form id="fuelForm"><div class="form-grid">
+      <div class="field"><label>Date</label><input type="date" name="date" required></div><div class="field"><label>Time</label><input type="time" name="time"></div>
+      <div class="field"><label>Fuel company / bunk</label><input name="bunk" placeholder="e.g. BPCL, Shell"></div><div class="field"><label>Fuel type / variety</label><input name="fuelType" placeholder="e.g. petrol, Speed 95"></div>
+      <div class="field"><label>Litres</label><input type="number" name="litres" min="0.01" step="0.01" required></div><div class="field"><label>Price per litre (₹)</label><input type="number" name="price" min="0" step="0.01" required></div>
+      <div class="field"><label>Odometer (km)</label><input type="number" name="odo" min="0" step="0.1" placeholder="Dashboard reading" required></div><div class="field"><label>Fill type</label><select name="fillType"><option>Full tank</option><option>Partial fill</option></select></div>
+      <div class="field"><label>Trip meter</label><input name="trip" placeholder="Trip A / Trip B / F"></div><div class="field"><label>Receipt / photo (optional)</label><input type="file" name="photo" accept="image/*,.pdf"></div>
+      <div class="field full"><label>Notes</label><textarea name="notes" placeholder="Fuel station, receipt details or observations"></textarea></div>
+    </div><div class="form-actions"><button class="btn primary">Save fuel entry</button><button class="btn ghost" type="reset">Clear</button></div></form></div>
+    <div class="card"><div class="section-head"><div><h2>Fuel history</h2><p>Recorded fill-ups and costs</p></div></div><div id="fuelTable"></div></div>
+  </div>
+</section>
+<section id="services" class="view">
+  <div class="section-head"><div><h2>Service history</h2><p>Keep source odometer readings and verified dashboard readings distinct.</p></div></div>
+  <div class="grid two-col">
+    <div class="card"><h2 style="margin-top:0">Add service record</h2><form id="serviceForm"><div class="form-grid">
+      <div class="field"><label>Service date</label><input type="date" name="date" required></div><div class="field"><label>Service number</label><select name="number"><option>1st</option><option>2nd</option><option>3rd</option><option>4th</option><option>5th</option><option>6th</option><option>7th</option><option>8th</option><option>Other</option></select></div>
+      <div class="field"><label>Workshop</label><input name="workshop" placeholder="Workshop / dealer"></div><div class="field"><label>Odometer on document (km)</label><input type="number" name="odoDoc" min="0" step=".1"></div>
+      <div class="field"><label>Verified dashboard odometer (km)</label><input type="number" name="odoVerified" min="0" step=".1"></div><div class="field"><label>Job card / invoice number</label><input name="invoice"></div>
+      <div class="field"><label>Total bill (₹)</label><input type="number" name="total" min="0" step=".01" required></div><div class="field"><label>Status</label><select name="status"><option>Completed</option><option>Pending</option><option>Needs review</option></select></div>
+      <div class="field full"><label>Work performed / complaints / findings / recommendations</label><textarea name="work" placeholder="Oil, filters, complaints, findings, recommended or declined work…"></textarea></div>
+      <div class="field full"><label>Itemised bill lines</label><p class="muted" style="font-size:12px;margin:0">Add each part, consumable, labour charge or other fee separately. Enter amounts exactly as printed on the source bill.</p><div id="serviceItems" class="service-items"></div><div class="form-actions"><button class="btn small" type="button" id="addServiceItem">＋ Add bill line</button><button class="btn small" type="button" id="addLabourItem">＋ Add labour</button></div></div>
+      <div class="field"><label>Parts / consumables subtotal (₹)</label><input name="partsSubtotal" id="partsSubtotal" type="number" min="0" step=".01" readonly></div><div class="field"><label>Labour subtotal (₹)</label><input name="labourSubtotal" id="labourSubtotal" type="number" min="0" step=".01" readonly></div>
+      <div class="field"><label>Other charges (₹)</label><input name="otherCharges" id="otherCharges" type="number" min="0" step=".01" value="0"></div><div class="field"><label>Discount (₹)</label><input name="discount" id="serviceDiscount" type="number" min="0" step=".01" value="0"></div>
+      <div class="field"><label>Taxable amount (₹)</label><input name="taxable" id="serviceTaxable" type="number" min="0" step=".01" readonly></div><div class="field"><label>GST / tax amount (₹)</label><input name="tax" id="serviceTax" type="number" min="0" step=".01" value="0"></div>
+      <div class="field"><label>Final invoice total (₹)</label><input type="number" name="total" id="serviceTotal" min="0" step=".01" required></div><div class="field"><label>Bill total check</label><div id="serviceTotalCheck" class="tag warn">Enter bill lines or total</div></div>
+      <div class="field"><label>Record verification</label><select name="verification"><option>Needs review</option><option>Checked against original bill</option><option>Partially transcribed</option><option>Source unavailable</option></select></div><div class="field"><label>Bill / job card source reference</label><input name="sourceReference" placeholder="PDF filename, page, image name"></div>
+      <div class="field full"><label>Upload bill / job card (PDF or photo)</label><input type="file" name="bill" accept="image/*,.pdf"></div>
+    </div><div class="form-actions"><button class="btn primary">Save service record</button><button class="btn ghost" type="reset">Clear form</button></div></form></div>
+    <div class="card"><div class="section-head"><div><h2>Historical service records</h2><p>Chronological itemised records. Select a record to expand its bill lines and source notes.</p></div></div><div class="toolbar"><input id="serviceSearch" placeholder="Search date, workshop, invoice or part number…"><select id="serviceFilter"><option value="all">All verification states</option><option>Needs review</option><option>Checked against original bill</option><option>Partially transcribed</option><option>Source unavailable</option></select></div><div id="serviceTable"></div></div>
+    <div class="card"><div class="section-head"><div><h2>Historical bill transcription checklist</h2><p>Known details recovered from earlier notes. These are not treated as verified complete bills until checked against the original image/PDF.</p></div></div><div id="legacyServiceNotes" class="legacy-notes"></div></div>
+  </div>
+</section>
+<section id="parts" class="view">
+  <div class="section-head"><div><h2>Part-number cross-reference</h2><p>Search part identifiers from both catalogue OCR indexes. Results show the matched part number in its own column instead of dumping every number from the source page.</p></div></div>
+  <div class="grid two-col">
+    <div class="card"><h2 style="margin-top:0">Search parts</h2><div class="field"><label>Part number, name or description</label><input id="partSearch" placeholder="e.g. part number or spark plug"></div><div class="field" style="margin-top:12px"><label>Catalogue source</label><select id="partSource"><option value="all">Both catalogues</option><option value="Part Number 1">Part Number 1 PDF</option><option value="Part Number 2">Part Number 2 PDF</option><option value="manual">Manually added entries</option></select></div><div id="partsResults" style="margin-top:14px"></div></div>
+    <div class="card"><h2 style="margin-top:0">Add verified catalogue entry</h2><p class="muted" style="font-size:13px">Searchable text has been indexed from both catalogue PDFs. Results are filtered to individual part-number candidates; verify OCR results against the original page.</p><form id="partForm"><div class="form-grid">
+      <div class="field"><label>Part number</label><input name="number" required></div><div class="field"><label>Part name</label><input name="name" required></div>
+      <div class="field"><label>Listed price (₹)</label><input name="price" type="number" min="0" step=".01"></div><div class="field"><label>Catalogue source</label><select name="source"><option>Part Number 1</option><option>Part Number 2</option><option>Manual / service bill</option></select></div>
+      <div class="field full"><label>Description / fitment notes</label><textarea name="description"></textarea></div>
+    </div><div class="form-actions"><button class="btn primary">Save part entry</button></div></form>
+    <div class="notice">Status rules: <b>Matched</b> means an entry exists in your saved catalogue index. <b>Needs review</b> means you should verify it against the PDF. Fitment and superseded numbers will only be stated when supported by source data.</div></div>
+  </div>
+  <div class="card" style="margin-top:16px"><div class="section-head"><div><h2>Catalogue files</h2><p>Keep the original PDFs attached to the project.</p></div></div><div class="file-drop"><b>Import catalogue PDF or image</b><p class="muted">Choose Part Number 1 or Part Number 2. Files are kept in this browser, not uploaded to a server.</p><form id="catalogueForm"><div class="form-grid"><div class="field"><label>Catalogue label</label><select name="label"><option>Part Number 1</option><option>Part Number 2</option><option>Other catalogue</option></select></div><div class="field"><label>PDF / image file</label><input type="file" name="file" accept=".pdf,image/*" required></div></div><button class="btn primary" style="margin-top:12px">Save catalogue file</button></form></div><div id="catalogueFiles" class="file-list" style="margin-top:12px"></div></div>
+</section>
+<section id="documents" class="view">
+  <div class="section-head"><div><h2>Documents & renewals</h2><p>Insurance, PUC, RC, invoice, warranty, AMC and service bills.</p></div></div>
+  <div class="grid two-col">
+    <div class="card"><h2 style="margin-top:0">Add document record</h2><form id="docForm"><div class="form-grid">
+      <div class="field"><label>Document type</label><select name="type"><option>Insurance</option><option>PUC</option><option>RC</option><option>Purchase invoice</option><option>Extended warranty</option><option>AMC</option><option>Service bill</option><option>Other</option></select></div><div class="field"><label>Document / policy number</label><input name="number"></div>
+      <div class="field"><label>Issue / start date</label><input type="date" name="start"></div><div class="field"><label>Expiry / end date</label><input type="date" name="end"></div>
+      <div class="field"><label>Premium / amount (₹)</label><input type="number" name="amount" min="0" step=".01"></div><div class="field"><label>Provider / workshop</label><input name="provider"></div>
+      <div class="field full"><label>Notes</label><textarea name="notes"></textarea></div><div class="field full"><label>Attach PDF / photo</label><input type="file" name="file" accept=".pdf,image/*"></div>
+    </div><div class="form-actions"><button class="btn primary">Save document</button></div></form></div>
+    <div class="card"><div class="section-head"><div><h2>Document register</h2><p>Expiry status is calculated from the current date.</p></div></div><div id="documentsTable"></div></div>
+  </div>
+</section>
+<section id="expenses" class="view">
+  <div class="section-head"><div><h2>Expenses</h2><p>Track fuel, maintenance, parts, insurance and other ownership costs.</p></div></div>
+  <div class="grid two-col">
+    <div class="card"><h2 style="margin-top:0">Add expense</h2><form id="expenseForm"><div class="form-grid">
+      <div class="field"><label>Date</label><input type="date" name="date" required></div><div class="field"><label>Category</label><select name="category"><option>Fuel</option><option>Service</option><option>Parts</option><option>Insurance</option><option>PUC</option><option>Accessories</option><option>Washing / parking</option><option>Other</option></select></div>
+      <div class="field"><label>Amount (₹)</label><input type="number" name="amount" min="0" step=".01" required></div><div class="field"><label>Odometer (optional)</label><input type="number" name="odo" min="0" step=".1"></div>
+      <div class="field full"><label>Description</label><input name="description" required placeholder="What was paid for?"></div>
+    </div><div class="form-actions"><button class="btn primary">Save expense</button></div></form></div>
+    <div class="card"><div class="section-head"><div><h2>Expense register</h2><p>All manually recorded expenses</p></div></div><div id="expensesTable"></div></div>
+  </div>
+</section>
+<section id="notices" class="view">
+  <div class="section-head"><div><h2>Noticing board</h2><p>Read-only for regular visitors. Only an authenticated local admin session can add, edit, pin or delete notices.</p></div><button class="btn primary" data-go="admin">Open admin portal ↗</button></div>
+  <div class="card"><div id="noticeList"></div></div>
+</section>
+<section id="settings" class="view">
+  <div class="section-head"><div><h2>Settings & backup</h2><p>Version 1 runs locally in this browser. No account or cloud sync is configured.</p></div></div>
+  <div class="grid two-col">
+    <div class="card"><h2 style="margin-top:0">Bike profile</h2><form id="settingsForm"><div class="form-grid">
+      <div class="field"><label>Bike name</label><input name="bikeName" value="Royal Enfield Meteor 350"></div><div class="field"><label>Variant / colour</label><input name="variant" value="Fireball · Stellar Blue"></div>
+      <div class="field"><label>Registration (optional)</label><input name="registration" placeholder="Enter locally if desired"></div><div class="field"><label>Current verified odometer (km)</label><input name="odo" type="number" min="0" step=".1" value="17109.8"></div>
+      <div class="field"><label>Personal service interval (km)</label><input name="intervalKm" type="number" min="1" value="3500"></div><div class="field"><label>Personal service interval (months)</label><input name="intervalMonths" type="number" min="1" value="4"></div>
+    </div><div class="form-actions"><button class="btn primary">Save settings</button></div></form><div class="notice">The personal interval is separate from the manufacturer's maintenance schedule. Always verify official service intervals in the owner's manual.</div></div>
+    <div class="card"><h2 style="margin-top:0">Data management</h2><p class="muted">Export your structured records to JSON. Uploaded files are stored in browser IndexedDB separately and are not included in this JSON backup.</p><div class="form-actions"><button class="btn primary" id="exportBtn">Export JSON backup</button><label class="btn" for="importFile">Import JSON backup</label><input id="importFile" class="hidden" type="file" accept=".json,application/json"><button class="btn danger" id="clearBtn">Clear all records</button></div><div class="notice">Important: clearing browser site data or using another device will not sync these records. Keep backups somewhere safe. A future cloud version needs a secure backend and authentication.</div><h3>Admin / security</h3><p class="muted">This is a local prototype, not a production-secure admin portal. A password in a static GitHub Pages app cannot protect private records against someone who can inspect or alter the browser code. Do not enter secrets or rely on this build for secure multi-user access.</p></div>
+  </div>
+</section>
+
+<section id="admin" class="view">
+ <div class="section-head"><div><h2>Admin portal</h2><p>Manage every saved log, edit records, clear logs, and control the noticing board.</p></div><span class="pill" id="adminBadge">Locked</span></div>
+ <div id="adminAuth" class="grid two-col">
+  <div class="card"><h2 id="adminAuthTitle" style="margin-top:0">Admin sign in</h2><p class="muted">First use? Create your admin account on this browser. Otherwise sign in with the account you set up here.</p>
+   <form id="adminAuthForm"><div class="form-grid"><div class="field full"><label>Admin username</label><input name="username" autocomplete="username" required></div><div class="field full"><label>Password</label><input name="password" type="password" autocomplete="current-password" minlength="8" required></div><div class="field full" id="adminConfirmField"><label>Confirm password (first-time setup)</label><input name="confirm" type="password" autocomplete="new-password" minlength="8"></div></div><div class="form-actions"><button class="btn primary" id="adminAuthSubmit">Create admin account</button><button class="btn" type="button" id="toggleAdminMode">I already have an account</button></div></form>
+   <div class="notice">Local-browser account only. This is not production-secure authentication: a public GitHub Pages site cannot protect records or credentials using front-end code alone. Do not use a password you use elsewhere.</div>
+  </div>
+  <div class="card"><h2 style="margin-top:0">Admin powers</h2><ul><li>Edit any saved fuel, service, part, document, expense, notice or settings record.</li><li>Delete individual logs or clear all saved records after confirmation.</li><li>Manage the noticing board: add, edit, pin/unpin and delete.</li><li>Export a backup before destructive changes.</li></ul><p class="muted">Data remains in this browser's local storage. It does not sync between devices.</p></div>
+ </div>
+ <div id="adminWorkspace" class="hidden">
+  <div class="admin-status"><strong>Admin session active on this browser.</strong> You can edit all structured records and manage the noticing board. Export a backup before bulk deletion.</div>
+  <div class="toolbar"><button class="btn" id="adminExport">Export backup</button><button class="btn" id="adminLogout">Log out</button><button class="btn danger" id="adminDeleteAll">Delete all logs</button><button class="btn danger" id="adminWipeAll">Delete all records + notices</button></div>
+  <div class="admin-grid">
+   <div class="card"><h2 style="margin-top:0">Record editor</h2><p class="muted">Choose a collection and record, edit its complete JSON fields, then save.</p><div class="field"><label>Collection</label><select id="adminCollection"><option value="fuel">Fuel logs</option><option value="services">Service logs</option><option value="parts">Manual part entries</option><option value="documents">Documents / PUC / insurance</option><option value="expenses">Expenses</option><option value="notices">Noticing board</option><option value="settings">Bike settings</option></select></div><div class="field" style="margin-top:12px"><label>Record</label><select id="adminRecord"></select></div><div class="field" style="margin-top:12px"><label>Editable record JSON</label><textarea id="adminJson" class="admin-editor" spellcheck="false"></textarea></div><div class="form-actions"><button class="btn primary" id="adminSaveRecord">Save edits</button><button class="btn danger" id="adminDeleteRecord">Delete selected record</button></div></div>
+   <div class="grid" style="gap:16px;align-content:start">
+    <div class="card"><h2 style="margin-top:0">Admin-only noticing board controls</h2><form id="adminNoticeForm"><input type="hidden" name="id"><div class="form-grid"><div class="field"><label>Notice title</label><input name="title" required></div><div class="field"><label>Priority</label><select name="priority"><option>Normal</option><option>Important</option><option>Urgent</option></select></div><div class="field"><label>Reminder date</label><input type="date" name="date"></div><div class="field"><label>Pin to top</label><select name="pinned"><option value="false">Not pinned</option><option value="true">Pinned</option></select></div><div class="field full"><label>Details</label><textarea name="body" required></textarea></div></div><div class="form-actions"><button class="btn primary" id="adminNoticeSave">Publish notice</button><button class="btn" type="reset" id="adminNoticeReset">Clear form</button></div></form><div id="adminNoticeList" style="margin-top:12px"></div></div>
+    <div class="card"><h2 style="margin-top:0">Record totals</h2><div id="adminCounts"></div></div>
+   </div>
+  </div>
+ </div>
+</section>
+</main></div>
+<div class="toast" id="toast"></div>
+<script src="script.js" defer></script>
+</body></html>
